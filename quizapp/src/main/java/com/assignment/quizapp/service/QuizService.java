@@ -1,5 +1,6 @@
 package com.assignment.quizapp.service;
 
+import com.assignment.quizapp.dto.QuestionDTO;
 import com.assignment.quizapp.entity.Question;
 import com.assignment.quizapp.entity.User;
 import com.assignment.quizapp.repository.QuestionRepository;
@@ -31,10 +32,17 @@ public class QuizService {
         userRepository.save(user);
         return "Quiz session started!";
     }
-    public Question getRandomQuestion() {
+//    public Question getRandomQuestion() {
+//        List<Question> questions = questionRepository.findAll();
+//        Random random = new Random();
+//        return questions.get(random.nextInt(questions.size()));
+//    }
+
+    public QuestionDTO getRandomQuestion() {
         List<Question> questions = questionRepository.findAll();
         Random random = new Random();
-        return questions.get(random.nextInt(questions.size()));
+        Question randomQuestion = questions.get(random.nextInt(questions.size()));
+        return new QuestionDTO(randomQuestion);
     }
 
     public String submitAnswer(Long questionId, String answer) {
@@ -56,5 +64,11 @@ public class QuizService {
         stats.put("correctAnswers", user.getCorrectAnswers());
         stats.put("incorrectAnswers", user.getIncorrectAnswers());
         return stats;
+    }
+
+    public boolean validateAnswer(Long questionId, String selectedOption) {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new RuntimeException("Question not found"));
+        return question.getCorrectAnswer().equals(selectedOption);
     }
 }

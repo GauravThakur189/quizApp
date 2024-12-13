@@ -1,61 +1,36 @@
-package com.assignment.quizapp.entity;
+package com.assignment.quizapp.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import com.assignment.quizapp.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Question {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class QuestionDTO {
     private String text;
     private String optionA;
     private String optionB;
     private String optionC;
     private String optionD;
-    private String correctAnswer;
 
-    public Question(){
+    public QuestionDTO(){
 
     }
 
-    public String getCorrectAnswer() {
-        return this.correctAnswer;
+    public QuestionDTO(Question question) {
+        this.text = question.getText();
+        this.optionA = question.getOptionA();
+        this.optionB = question.getOptionB();
+        this.optionC = question.getOptionC();
+        this.optionD = question.getOptionD();
     }
 
-
-    public Question(String text, String optionA, String optionB, String optionC, String optionD, String correctAnswer) {
-        this.text = text;
-        this.optionA = optionA;
-        this.optionB = optionB;
-        this.optionC = optionC;
-        this.optionD = optionD;
-        this.correctAnswer = correctAnswer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCorrectAnswer(String correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
+    // Getters and Setters
 
     public String getText() {
         return text;
@@ -97,3 +72,4 @@ public class Question {
         this.optionD = optionD;
     }
 }
+
